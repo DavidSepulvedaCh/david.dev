@@ -1,0 +1,12 @@
+{
+    "experiences": [
+        {
+            "title": "Pasante, Área de Tecnología",
+            "company": "Direccion de Impuestos y Aduanas Nacionales",
+            "date": "Febrero 2024 - Julio 2024",
+            "description": "Miembro de La Mesa Soporte TIC, DIAN Seccional Bucaramanga.",
+            "url": "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
+        }
+    ],
+    "skils": ["Angular", "Astro",  "CSS", "HTML", "JavaScript", "MongoDB", "MySQL", "NodeJs", "Sass", "Typescript"]
+}

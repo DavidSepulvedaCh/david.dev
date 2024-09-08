@@ -1,0 +1,236 @@
+.projects {
+  width: 100%;
+  display: flex;
+  margin: 20px auto;
+  justify-content: space-around;
+}
+
+.card-project {
+  display: flex;
+  background: rgba(54, 54, 54, 0.225);
+  backdrop-filter: blur(20px);
+  border-radius: 10px;
+  width: 600px;
+  overflow: hidden;
+  transition: background 0.3s ease;
+  transition: transform 0.1s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.card-project:hover {
+  border: 2px solid #04316457;
+}
+
+.cards .card-project::before {
+  content: "";
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: var(--glowing-color);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cards .card-project:hover::before {
+  opacity: 1;
+}
+
+.card-project .project-information,
+.card-project .project-image-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.card-project .project-image-wrapper {
+  width: 40%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 5px 0 0 5px;
+}
+
+.card-project .project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-project:hover .project-image {
+  transform: scale(1.1);
+}
+
+.card-project .project-information {
+  width: 60%;
+  margin: auto 20px;
+}
+
+.card-project .project-information .project-title {
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.card-project .project-information .project-description {
+  color: var(--secondary-color);
+}
+
+.card-project .project-information .tags {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.card-project .project-information .tags ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+  margin: 15px 0;
+}
+
+.card-project .project-information .tags ul li {
+  padding: 5px 15px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 400;
+  background: #9898983e;
+  /* background: #04316478; */
+  border-radius: 10px;
+}
+
+.card-project .project-information .project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-project .project-information .project-links a {
+  width: 110px;
+  color: #fff;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  align-content: center;
+  margin: 15px 0;
+  padding: 5px 10px;
+  background: #4f4f4f78;
+  border-radius: 5px;
+}
+
+.card-project .project-information .project-links a:hover {
+  background: #34343478;
+}
+
+.card-project .project-information .project-links p {
+  margin-left: 5px;
+}
+
+@media (max-width: 800px) {
+  .projects {
+    width: 100%;
+  }
+
+  .card-project {
+    flex-direction: column;
+    width: 340px;
+    margin: 0 auto;
+  }
+
+  .card-project .project-image-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .card-project .project-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .card-project .project-information {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .card-project .project-information .project-links {
+    margin: 5px auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .projects {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cards {
+    flex-direction: column;
+    margin: 20px 0;
+  }
+
+  .card-project {
+    display: block;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .card-project .project-image-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .card-project .project-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .card-project .project-information {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .card-project .project-information .project-title {
+    font-size: 20px;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .card-project .project-information .project-description {
+    width: 100%;
+    font-size: 14px;
+    text-align: justify;
+  }
+
+  .card-project .project-information .tags ul {
+    justify-content: center;
+  }
+
+  .card-project .project-information .tags ul li {
+    font-size: 12px;
+    padding: 3px 10px;
+  }
+
+  .card-project .project-information .project-links {
+    justify-content: center;
+  }
+
+  .card-project .project-information .project-links a {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .card-project .project-information .project-links p {
+    margin: 0;
+  }
+}

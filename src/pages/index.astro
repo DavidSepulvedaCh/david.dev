@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+import Header from "@/components/Header.astro";
+import NavigationBar from "@/components/NavigationBar.astro";
+import CardProject from "@/components/CardProject.astro";
+import AboutMe from "@/components/AboutMe.astro";
+import Skils from "@/components/Skils.astro";
+import Experience from "@/components/Experience.astro";
+const projects = await getCollection("project");
+---
+
+<MainLayout title="David Sepulveda">
+  <NavigationBar />
+  <div class="content">
+    <section id="about-me">
+      <Header />
+      <AboutMe />
+    </section>
+
+    <section id="skils">
+      <p class="title-section"><span>Habilidades</span></p>
+      <Skils />
+    </section>
+
+    <section id="experience">
+      <p class="title-section"><span>Experiencia</span></p>
+      <Experience />
+    </section>
+
+    <section id="projects">
+      <p class="title-section"><span>Proyectos</span></p>
+      <div class="projects">
+        {
+          projects.map((project) => (
+            <CardProject {...project.data} slug={project.slug} />
+          ))
+        }
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-copyright">
+      <p>&copy; 2024 @DavidSepúlvedaCh. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+</MainLayout>
+
+<script>
+  let cards = document.querySelectorAll("body") as NodeListOf<HTMLElement>;
+
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      let x = e.pageX - card.offsetLeft;
+      let y = e.pageY - card.offsetTop;
+      card.style.setProperty("--x", x + "px");
+      card.style.setProperty("--y", y + "px");
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.setProperty("--x", "0");
+      card.style.setProperty("--y", "0");
+    });
+  });
+</script>

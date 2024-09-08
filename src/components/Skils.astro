@@ -1,0 +1,46 @@
+---
+import "@/styles/skils.css";
+import Angular from "@/icons/angular.astro";
+import AstroWeb from "@/icons/astro.astro";
+import Bootstrap from "@/icons/bootstrap.astro";
+import CSS from "@/icons/css3.astro";
+import HTML from "@/icons/html5.astro";
+import JavaScript from "@/icons/javascript.astro";
+import MongoDB from "@/icons/mongodb.astro";
+import MySQL from "@/icons/mysql.astro";
+import NodeJs from "@/icons/nodejs.astro";
+import Sass from "@/icons/sass.astro";
+import Typescript from "@/icons/typescript.astro";
+import {skils} from "@/cv.json";
+
+const Skils_Icons: Record<string, any> = {
+    Angular,
+    AstroWeb,
+    Bootstrap,
+    CSS,
+    HTML,
+    JavaScript,
+    MongoDB,
+    MySQL,
+    NodeJs,
+    Sass,
+    Typescript
+}
+---
+
+<ul class="skils">
+    {
+        skils.map((skil)=>{
+            const iconName = skil === "Astro"? "AstroWeb": skil
+            const Icon = Skils_Icons[iconName]
+            return(
+            <li class={`skil ${skil.toLowerCase()}`} >
+                <Icon/>
+                <p>{skil}</p>
+            </li>
+            )
+        })
+    
+    }
+</ul>
+

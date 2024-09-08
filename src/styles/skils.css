@@ -1,0 +1,111 @@
+.skils {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 40px auto;
+}
+
+.skil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--secondary-color);
+  border-radius: 5px;
+  border: 0.2px solid #6d6d6d;
+  width: 200px;
+  padding: 10px 0;
+  transition: background 0.3s ease, padding 0.3s ease;
+  margin: 5px 10px;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.skil:hover {
+  background: #9f9f9f31;
+}
+
+.skil svg {
+  width: 40px;
+}
+
+.skil:hover svg,
+.skil:hover p {
+  transform: scale(1.1);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.skil svg,
+.skil p {
+  transition: transform 0.3s ease;
+}
+
+.skil p {
+  margin-left: 5px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.skil.angular:hover {
+  color: #dd0031;
+}
+
+.skil.astro:hover {
+  color: #ff5a03;
+}
+
+.skil.bootstrap:hover {
+  color: #7952b3;
+}
+
+.skil.css:hover {
+  color: #2965f1;
+}
+
+.skil.html:hover {
+  color: #e34f26;
+}
+
+.skil.javascript:hover {
+  color: #d9c317;
+}
+
+.skil.mongodb:hover {
+  color: #47a248;
+}
+
+.skil.mysql:hover {
+  color: #00758f;
+}
+
+.skil.nodejs:hover {
+  color: #68a063;
+}
+
+.skil.sass:hover {
+  color: #cc6699;
+}
+
+.skil.typescript:hover {
+  color: #007acc;
+}
+
+@media (max-width: 700px) {
+  .skil {
+    width: 130px;
+    padding: 5px 0;
+    margin: 5px;
+    gap: 5px;
+  }
+  .skil p {
+    margin-left: 5px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .skil svg {
+    width: 20px;
+  }
+}

@@ -1,0 +1,160 @@
+@font-face {
+  font-family: "ProductSans";
+  src: url("/public/fonts/ProductSans-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ProductSans";
+  src: url("/public/fonts/ProductSans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ProductSans";
+  src: url("/public/fonts/ProductSans-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ProductSans";
+  src: url("/public/fonts/ProductSans-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --base-background-color: #fff;
+  --text-color: #000;
+  --secondary-color: #737373;
+  --tertiary-color: #999;
+  --hover-background-color: rgba(43, 54, 80, 0.5);
+  --hover-background-navbar: rgba(151, 151, 151, 0.373);
+  --background-navbar: rgba(188, 188, 188, 0.576);
+  --glowing-color: radial-gradient(
+    #8a8a8a59,
+    #8a8a8a59,
+    transparent,
+    transparent
+  );
+  --logo: "/public/img/Lg_BN.png";
+}
+
+.darkmode {
+  --base-background-color: radial-gradient(
+    circle at right top,
+    #1f2f4a,
+    #0d1015
+  );
+  --text-color: #fff;
+  --secondary-color: #a8a8a8;
+  --tertiary-color: #999;
+  --hover-background-color: rgba(43, 54, 80, 0.5);
+  --hover-background-navbar: rgba(43, 54, 80, 0.5);
+  --background-navbar: rgba(20, 31, 53, 0.576);
+  --glowing-color: radial-gradient(
+    #192740f1,
+    #192740d1,
+    transparent,
+    transparent
+  );
+  --logo: "/public/img/Lg_BN.png";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "ProductSans";
+  background: var(--base-background-color);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: var(--glowing-color);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body:hover::before {
+  opacity: 1;
+}
+
+.content {
+  margin: 100px 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.title-section span {
+  background: linear-gradient(90deg, #636363, #dcdef7);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 35px;
+}
+
+.label-section {
+  color: #fff;
+  font-size: 20px;
+  font-weight: lighter;
+  margin: 15px 0 30px 0;
+}
+
+.footer {
+  background: #64646417;
+  backdrop-filter: blur(5px);
+  color: var(--text-color);
+  padding: 10px 0;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.footer-copyright {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-copyright p {
+  color: var(--secondary-color);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    padding: 0 20px;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .social-icon {
+    margin-bottom: 10px;
+  }
+}

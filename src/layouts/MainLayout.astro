@@ -1,0 +1,29 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <BaseHead title={title} />
+  <body id="test">
+    <div>
+      <main>
+        <slot />
+      </main>
+      <footer></footer>
+    </div>
+    <script>
+      const theme = localStorage.getItem("theme") || "darkmode";
+      document.documentElement.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        document.documentElement.classList.add("darkmode");
+      } else {
+        document.documentElement.classList.remove("darkmode");
+      }
+    </script>
+  </body>
+</html>

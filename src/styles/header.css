@@ -1,0 +1,143 @@
+.container-index {
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  width: 90%;
+}
+
+.container-index .left-column {
+  order: 1;
+  width: 70%;
+  margin: auto;
+  padding: 10px;
+  color: var(--text-color);
+}
+
+.container-index .left-column .name {
+  line-height: 1;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.container-index .left-column .name span {
+  background: linear-gradient(90deg, #043164, #7b86fe);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.container-index .left-column .description {
+  color: var(--text-color);
+  font-size: 25px;
+  font-weight: lighter;
+  margin-bottom: 5px;
+}
+
+.container-index .left-column .slogan {
+  color: 20px;
+  color: var(--secondary-color);
+  margin-bottom: 5px;
+}
+
+.container-index .right-column {
+  order: 2;
+  width: 30%;
+  padding: 10px;
+}
+
+.contact {
+  display: flex;
+  margin: 15px 0;
+}
+
+.contact a {
+  color: var(--secondary-color);
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.contact a:hover {
+  cursor: pointer;
+  background: var(--hover-background-color);
+}
+
+.container-index .right-column {
+  order: 2;
+  width: 30%;
+  padding: 10px;
+  mask-image: linear-gradient(#10151d 40%, transparent);
+}
+
+.container-index .right-column img {
+  position: relative;
+  top: -20px;
+  margin: 10px auto;
+  width: 80%;
+  filter: drop-shadow(0 0px 5px rgba(32, 52, 105, 0.473));
+  mask-image: linear-gradient(#10151d 90%, transparent);
+}
+
+@media (max-width: 700px) {
+  .container-index .left-column .name {
+    width: 100%;
+    font-size: 35px;
+    margin: 10px 0;
+  }
+
+  .container-index .left-column .name br {
+    display: none;
+  }
+
+  .container-index {
+    width: 100%;
+    display: block;
+    margin: 20px auto;
+  }
+
+  .container-index .left-column {
+    width: 100%;
+    margin: auto;
+  }
+
+  .container-index .right-column {
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .container-index .right-column img {
+    top: -20px;
+    width: 150px;
+    margin: 10px auto;
+  }
+
+  .container-index .left-column .name {
+    width: 100%;
+    font-size: 35px;
+    margin: 10px 0;
+  }
+
+  .container-index .left-column .description,
+  .container-index .left-column .slogan {
+    width: 100%;
+    margin: 8px 0;
+    font-size: 16px;
+  }
+
+  .contact {
+    display: flex;
+    margin: 5px 0;
+  }
+
+  .contact a {
+    text-align: left;
+    margin: 2px 2px 2px 0;
+    padding: 5px;
+    border: none;
+  }
+}

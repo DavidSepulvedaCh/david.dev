@@ -1,0 +1,45 @@
+---
+import Mail from "@/icons/mail.astro";
+import GitHub from "@/icons/github.astro";
+import Cv from "@/icons/cv.astro";
+import Linkedin from "@/icons/linkedin.astro";
+---
+
+<div class="container-index">
+  <div class="left-column">
+    <div class="information">
+      <h1 class="name">
+        David <span>Leonardo</span><br /> Sepúlveda Chávez
+      </h1>
+      <p class="description">Ingeniero de sistemas e informática</p>
+      <p class="slogan">
+        Mi objetivo es crear experiencias digitales atractivas y funcionales.
+      </p>
+    </div>
+    <div class="contact">
+      <a href="mailto:sdavidleonardo01@gmail.com" aria-label="Email">
+        <Mail class="icon" />
+      </a>
+      <a
+        href="https://github.com/DavidSepulvedaCh"
+        target="_blank"
+        aria-label="GitHub"
+      >
+        <GitHub class="icon" />
+      </a>
+      <a href="/path/to/cv.pdf" target="_blank" aria-label="CV">
+        <Cv class="icon" />
+      </a>
+      <a
+        href="https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
+        target="_blank"
+        aria-label="LinkedIn"
+      >
+        <Linkedin class="icon" />
+      </a>
+    </div>
+  </div>
+  <div class="right-column">
+    <img src="/public/img/david_3.png" alt="" />
+  </div>
+</div>

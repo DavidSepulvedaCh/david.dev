@@ -1,0 +1,59 @@
+---
+import { type CollectionEntry } from "astro:content";
+import "@/styles/cardproject.css";
+import GitHub from "@/icons/github.astro";
+import Web from "@/icons/web.astro";
+type Props = CollectionEntry<"project">["data"] & { slug: string };
+const { title, image, tags, description, slug, urlGitHub } = Astro.props;
+---
+
+<div class="cards">
+    <div class="card-project">
+        <div class="project-image-wrapper">
+            <img class="project-image" src={image} alt="">
+        </div>
+        <div class="project-information">
+            <p class="project-title">{title}</p>
+            <div class="tags">
+                <ul>
+                    {tags.map((tag)=>(<li>{tag}</li>))}
+                    
+                </ul>
+            </div>
+            <p class="project-description">{description}</p>
+            <div class="project-links">
+                <a href={urlGitHub} target="_blank">
+                    <GitHub/>
+                    <p>Repositorio</p>
+                </a>
+                <a href="" class="web">
+                    <Web/>
+                    <p>Visualizar</p>
+                </a>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+
+
+<script>
+    let cards = document.querySelectorAll(".card-project") as NodeListOf<HTMLElement>;
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            let x = e.pageX - card.offsetLeft;
+            let y = e.pageY - card.offsetTop;
+            card.style.setProperty('--x', x + 'px');
+            card.style.setProperty('--y', y + 'px');
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--x', '0');
+            card.style.setProperty('--y', '0');
+        });
+    });
+</script>
+
+

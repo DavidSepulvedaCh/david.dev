@@ -1,0 +1,22 @@
+---
+import "@/styles/experience.css"
+import {experiences} from "@/cv.json";
+
+---
+
+<div class="timeline">
+    {
+        experiences.map((experience)=>(
+        <div class="timeline-item">
+            <div class="timeline-icon"></div>
+            <div class="timeline-content">
+                <p class="job-role">{experience.title}</p>
+                <span class="company">{experience.company}</span>
+                <p class="job-date">{experience.date}</p>
+                <p class="job-description">{experience.description}</p>
+                <a href={experience.url} target="_blank" class="more-info">Saber más</a>
+            </div>
+        </div>
+        ))
+    }
+</div>

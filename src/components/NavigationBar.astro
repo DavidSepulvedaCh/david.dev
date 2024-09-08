@@ -1,0 +1,110 @@
+---
+import "@/styles/navigationbar.css";
+import DarkTheme from "@/icons/dark.astro";
+import LightTheme from "@/icons/light.astro";
+import Menu from "@/icons/menu.astro";
+---
+
+<div class="navigation-bar">
+  <div class="logo">
+    <div class="img-logo"></div>
+    <p class="label-logo">david.dev</p>
+  </div>
+
+  <div class="hamburger-btn" id="hamburger-btn"><Menu /></div>
+
+  <div class="menu hiden" id="menu">
+    <ul>
+      <li><a href="#about-me">Acerca de mí</a></li>
+      <li><a href="#skils">Habilidades</a></li>
+      <li><a href="#experience">Experiencia</a></li>
+      <li><a href="#projects">Proyectos</a></li>
+    </ul>
+  </div>
+
+  <div class="theme">
+    <a href="#" class="dark">
+      <DarkTheme />
+    </a>
+    <a href="#" class="light">
+      <LightTheme />
+    </a>
+  </div>
+</div>
+
+<script>
+  window.addEventListener("scroll", function () {
+    const navBar = document.querySelector(".navigation-bar");
+    if (window.scrollY > 50) {
+      navBar!.classList.add("scrolled");
+    } else {
+      navBar!.classList.remove("scrolled");
+    }
+  });
+
+  const darkBtn = document.querySelector(".dark") as HTMLElement;
+  const lightBtn = document.querySelector(".light") as HTMLElement;
+  const logo = document.querySelector(".img-logo") as HTMLElement;
+  const logoDark = "/public/img/Lg_BN.png";
+  const logoLight = "/public/img/Lg_CL.png";
+
+  function applyTheme(theme: string) {
+    document.documentElement.setAttribute("data-theme", theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("darkmode");
+      logo.style.backgroundImage = `url(${logoDark})`;
+      darkBtn.style.display = "none";
+      lightBtn.style.display = "block";
+    } else {
+      document.documentElement.classList.remove("darkmode");
+      logo.style.backgroundImage = `url(${logoLight})`;
+      darkBtn.style.display = "block";
+      lightBtn.style.display = "none";
+    }
+  }
+
+  const currentTheme = localStorage.getItem("theme") || "light";
+  applyTheme(currentTheme);
+
+  darkBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    applyTheme("dark");
+    localStorage.setItem("theme", "dark");
+  });
+
+  lightBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    applyTheme("light");
+    localStorage.setItem("theme", "light");
+  });
+
+  const hamburgerBtn = document.getElementById("hamburger-btn") as HTMLElement;
+  const menu = document.getElementById("menu") as HTMLElement;
+  const navBar = document.querySelector(".navigation-bar");
+
+  hamburgerBtn.addEventListener("click", () => {
+    navBar?.classList.toggle("scrolled");
+    menu.classList.toggle("hiden");
+  });
+
+  window.addEventListener("scroll", function () {
+    const sections = document.querySelectorAll("section");
+    const navLi = document.querySelectorAll(".menu ul li a");
+
+    let currentSection: string = "";
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 50) {
+        currentSection = section.getAttribute("id") || "";
+      }
+    });
+
+    navLi.forEach((li) => {
+      li.classList.remove("active");
+      if (li.getAttribute("href")?.includes(currentSection)) {
+        li.classList.add("active");
+      }
+    });
+  });
+</script>

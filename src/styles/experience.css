@@ -1,0 +1,77 @@
+.timeline {
+  position: relative;
+  max-width: 100%;
+  margin: 50px 30px;
+  width: 100%;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 20px;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #7d7d7d6a;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 15px;
+  height: 15px;
+  background: linear-gradient(90deg, #01254e, #394090);
+  border-radius: 50%;
+}
+
+.timeline-content {
+  padding-left: 30px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.job-role {
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.company {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 5px 0;
+  color: var(--tertiary-color);
+}
+
+.more-info {
+  color: var(--secondary-color);
+  text-decoration: none;
+  margin-top: 10px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.job-date {
+  color: #999;
+  margin: 5px 0;
+}
+
+.job-description {
+  color: var(--secondary-color);
+  font-size: 16px;
+}
+
+@media (max-width: 700px) {
+  .timeline {
+    width: 100%;
+    margin: 50px auto;
+  }
+}

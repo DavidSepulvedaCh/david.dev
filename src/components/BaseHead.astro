@@ -1,0 +1,45 @@
+---
+import ViewTransitions from "astro/components/ViewTransitions.astro";
+import "@/styles/global.css";
+import "@/styles/header.css";
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/public/img/Lg_BN.png" type="image/x-icon">
+
+  <title>{title}</title>
+
+  <!-- Fonts -->
+  <link
+    rel="preload"
+    href="/fonts/ProductSans-Bold.woff"
+    as="font"
+    type="font/woff"
+  />
+  <link
+    rel="preload"
+    href="/fonts/ProductSans-Light.woff"
+    as="font"
+    type="font/woff"
+  />
+  <link
+    rel="preload"
+    href="/fonts/ProductSans-Medium.woff"
+    as="font"
+    type="font/woff"
+  />
+  <link
+    rel="preload"
+    href="/fonts/ProductSans-Regular.woff"
+    as="font"
+    type="font/woff"
+  />
+  <ViewTransitions />
+</head>
