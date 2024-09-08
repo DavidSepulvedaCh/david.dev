@@ -48,7 +48,7 @@ html {
     transparent,
     transparent
   );
-  --logo: "/public/img/Lg_BN.png";
+  --logo: "/david.dev/img/Lg_BN.png";
 }
 
 .darkmode {
@@ -69,7 +69,7 @@ html {
     transparent,
     transparent
   );
-  --logo: "/public/img/Lg_BN.png";
+  --logo: "/david.dev/img/Lg_BN.png";
 }
 
 * {
