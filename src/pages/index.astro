@@ -7,6 +7,7 @@ import CardProject from "@/components/CardProject.astro";
 import AboutMe from "@/components/AboutMe.astro";
 import Skils from "@/components/Skils.astro";
 import Experience from "@/components/Experience.astro";
+import Footer from "@/components/Footer.astro";
 const projects = await getCollection("project");
 ---
 
@@ -39,28 +40,28 @@ const projects = await getCollection("project");
       </div>
     </section>
   </div>
-
-  <footer class="footer">
-    <div class="footer-copyright">
-      <p>&copy; 2024 @DavidSepúlvedaCh. Todos los derechos reservados.</p>
-    </div>
-  </footer>
+  <Footer />
 </MainLayout>
 
 <script>
-  let cards = document.querySelectorAll("body") as NodeListOf<HTMLElement>;
+  let body = document.querySelector("body") as HTMLElement;
+  let footer = document.querySelector("footer") as HTMLElement;
 
-  cards.forEach((card) => {
-    card.addEventListener("mousemove", (e) => {
-      let x = e.pageX - card.offsetLeft;
-      let y = e.pageY - card.offsetTop;
-      card.style.setProperty("--x", x + "px");
-      card.style.setProperty("--y", y + "px");
-    });
+  body.addEventListener("mousemove", (e) => {
+    let x = e.pageX - body.offsetLeft;
+    let y = e.pageY - body.offsetTop;
 
-    card.addEventListener("mouseleave", () => {
-      card.style.setProperty("--x", "0");
-      card.style.setProperty("--y", "0");
-    });
+    if (!footer.contains(e.target as Node)) {
+      body.style.setProperty("--x", x + "px");
+      body.style.setProperty("--y", y + "px");
+    } else {
+      body.style.setProperty("--x", "0");
+      body.style.setProperty("--y", "0");
+    }
+  });
+
+  body.addEventListener("mouseleave", () => {
+    body.style.setProperty("--x", "0");
+    body.style.setProperty("--y", "0");
   });
 </script>

@@ -1,6 +1,5 @@
 .navigation-bar {
-  width: 100%;
-  max-width: 100%;
+  max-width: 1400px;
   display: flex;
   padding: 5px;
   justify-content: space-between;

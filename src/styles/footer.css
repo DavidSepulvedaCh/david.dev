@@ -1,0 +1,47 @@
+.footer {
+  background-color: var(--background-footer);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--secondary-color);
+  font-size: 15px;
+}
+
+.footer-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+}
+
+.footer-icons a svg {
+  text-decoration: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  width: 30px;
+  transition: background 0.2s ease;
+  border-radius: 5px;
+}
+
+.footer-icons a svg:hover {
+  background: #979797;
+  color: var(--background-footer);
+}
+
+.text-footer p {
+  margin: 0;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 500px) {
+  .footer-icons {
+    gap: 15px;
+  }
+
+  .footer {
+    padding: 15px;
+  }
+}

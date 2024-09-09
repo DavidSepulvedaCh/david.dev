@@ -13,10 +13,12 @@
   align-items: center;
   color: var(--secondary-color);
   border-radius: 5px;
-  border: 0.2px solid #6d6d6d;
+  border: 0.2px solid #ababab4c;
   width: 200px;
   padding: 10px 0;
-  transition: background 0.3s ease, padding 0.3s ease;
+  transition:
+    background 0.3s ease,
+    padding 0.3s ease;
   margin: 5px 10px;
   overflow: hidden;
   gap: 10px;

@@ -37,14 +37,15 @@ html {
 :root {
   --base-background-color: #fff;
   --text-color: #000;
-  --secondary-color: #737373;
+  --secondary-color: #636363;
   --tertiary-color: #999;
   --hover-background-color: rgba(43, 54, 80, 0.5);
   --hover-background-navbar: rgba(151, 151, 151, 0.373);
   --background-navbar: rgba(188, 188, 188, 0.576);
+  --background-footer: #bcbcbc;
   --glowing-color: radial-gradient(
-    #8a8a8a59,
-    #8a8a8a59,
+    #8a8a8a44,
+    #8a8a8a44,
     transparent,
     transparent
   );
@@ -63,6 +64,7 @@ html {
   --hover-background-color: rgba(43, 54, 80, 0.5);
   --hover-background-navbar: rgba(43, 54, 80, 0.5);
   --background-navbar: rgba(20, 31, 53, 0.576);
+  --background-footer: #17181c;
   --glowing-color: radial-gradient(
     #192740f1,
     #192740d1,
@@ -78,9 +80,11 @@ html {
 }
 
 body {
+  max-width: 1400px;
   font-family: "ProductSans";
   background: var(--base-background-color);
   overflow-x: hidden;
+  margin: 0 auto;
 }
 
 body::before {
@@ -89,8 +93,8 @@ body::before {
   top: var(--y);
   left: var(--x);
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   background: var(--glowing-color);
   overflow: hidden;
   pointer-events: none;
@@ -123,32 +127,7 @@ body:hover::before {
   margin: 15px 0 30px 0;
 }
 
-.footer {
-  background: #64646417;
-  backdrop-filter: blur(5px);
-  color: var(--text-color);
-  padding: 10px 0;
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-}
-
-.footer-copyright {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.footer-copyright p {
-  color: var(--secondary-color);
-  font-size: 14px;
-}
-
 @media (max-width: 768px) {
-  .footer-content {
-    padding: 0 20px;
-  }
-
   .footer-links {
     flex-wrap: wrap;
     margin-bottom: 10px;
