@@ -4,4 +4,5 @@ description: "Esta es una aplicación de escritorio desarrollada en JavaFX para 
 image: "/david.dev/img/project.png"
 tags: ["JavaFx", "MySQL", "CSS", "Git"]
 urlGitHub: "https://github.com/DavidSepulvedaCh/ButcherShop"
+urlView: "https://github.com/DavidSepulvedaCh/ButcherShop"
 ---

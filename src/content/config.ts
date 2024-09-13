@@ -7,7 +7,8 @@ const project = defineCollection({
         description: z.string(),
         tags: z.string().array(),
         image: z.string(),
-        urlGitHub: z.string()
+        urlGitHub: z.string(),
+        urlView: z.string(),
     })
 });
 
