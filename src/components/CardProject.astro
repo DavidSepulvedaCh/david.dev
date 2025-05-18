@@ -26,10 +26,12 @@ const { title, image, tags, description, slug, urlGitHub, urlView } =
           <GitHub />
           <p>Repositorio</p>
         </a>
-        <a href={urlView} class="web">
-          <Web />
-          <p>Visualizar</p>
-        </a>
+        {urlView && (
+          <a href={urlView} class="web">
+            <Web />
+            <p>Visualizar</p>
+          </a>
+        )}
       </div>
     </div>
   </div>

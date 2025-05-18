@@ -40,16 +40,19 @@ html {
   --secondary-color: #636363;
   --tertiary-color: #999;
   --hover-background-color: rgba(43, 54, 80, 0.5);
+  --contact-background-color: rgba(139, 139, 139, 0.281);
   --hover-background-navbar: rgba(151, 151, 151, 0.373);
   --background-navbar: rgba(188, 188, 188, 0.576);
   --background-footer: #bcbcbc;
   --glowing-color: radial-gradient(
-    #8a8a8a44,
-    #8a8a8a44,
+    #8a8a8a2f,
+    #a3a3a356,
     transparent,
     transparent
   );
   --logo: "/david.dev/img/Lg_BN.png";
+  --title-section-color: #636363;
+  --title-section-gradient: linear-gradient(90deg, #52525a 0%, #494e55 100%);
 }
 
 .darkmode {
@@ -62,6 +65,7 @@ html {
   --secondary-color: #a8a8a8;
   --tertiary-color: #999;
   --hover-background-color: rgba(43, 54, 80, 0.5);
+  --contact-background-color: rgba(43, 54, 80, 0.5);
   --hover-background-navbar: rgba(43, 54, 80, 0.5);
   --background-navbar: rgba(20, 31, 53, 0.576);
   --background-footer: #17181c;
@@ -71,7 +75,9 @@ html {
     transparent,
     transparent
   );
+  --title-section-color: #fff;
   --logo: "/david.dev/img/Lg_BN.png";
+  --title-section-gradient: linear-gradient(90deg, #fff 0%, #b3b3e6 100%);
 }
 
 * {
@@ -112,7 +118,8 @@ body:hover::before {
 }
 
 .title-section span {
-  background: linear-gradient(90deg, #636363, #dcdef7);
+  background: var(--title-section-gradient);
+  color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

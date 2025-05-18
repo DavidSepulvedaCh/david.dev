@@ -5,30 +5,38 @@
   width: 100%;
 }
 
-.timeline-item {
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 20px;
-}
-
-.timeline-item::before {
+.timeline::before {
   content: "";
   position: absolute;
-  left: 7px;
+  left: 14px; /* Centra la línea con el icono */
   top: 0;
   width: 2px;
   height: 100%;
   background-color: #7d7d7d6a;
+  z-index: 0;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+/* Elimina la línea individual de cada item */
+.timeline-item::before {
+  content: none;
 }
 
 .timeline-icon {
   position: absolute;
-  left: 0;
-  top: 15px;
+  left: 7px;
+  top: 20px;
   width: 15px;
   height: 15px;
   background: linear-gradient(90deg, #01254e, #394090);
   border-radius: 50%;
+  z-index: 2;
 }
 
 .timeline-content {

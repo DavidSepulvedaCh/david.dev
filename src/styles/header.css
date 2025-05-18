@@ -61,7 +61,7 @@
 
 .contact a:hover {
   cursor: pointer;
-  background: var(--hover-background-color);
+  background: var(--contact-background-color);
 }
 
 .container-index .right-column {
