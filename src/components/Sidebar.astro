@@ -1,0 +1,110 @@
+---
+const email = "sdavidleonardo01@gmail.com";
+const phone = "+57 304 2030 466";
+const location = "Bucaramanga, Colombia";
+const links = {
+  github: "https://github.com/DavidSepulvedaCh",
+  linkedin:
+    "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/",
+  cv: "https://drive.google.com/file/d/1meCTj9RI4RBBDdydyFjbVL_zQe2cbBmU/view?usp=sharing",
+};
+---
+
+<aside class="v2-sidebar" aria-label="Información personal">
+  <div class="v2-avatar">
+    <img
+      src="/david.dev/img/Foto_David.png"
+      alt="Retrato de David Leonardo Sepúlveda Chávez"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+  <h1 class="v2-name">
+    David <span class="v2-name-mark">Sepúlveda</span>
+  </h1>
+  <p class="v2-pill">Desarrollador Web · Full-stack</p>
+
+  <hr class="v2-divider" />
+
+  <ul class="v2-info-list">
+    <li class="v2-info-item">
+      <span class="v2-info-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+          <path d="m3 7 9 6 9-6"></path>
+        </svg>
+      </span>
+      <span>
+        <span class="v2-info-label">Email</span>
+        <a class="v2-info-value" href={`mailto:${email}`}>{email}</a>
+      </span>
+    </li>
+
+    <li class="v2-info-item">
+      <span class="v2-info-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+          ></path>
+        </svg>
+      </span>
+      <span>
+        <span class="v2-info-label">Teléfono</span>
+        <a class="v2-info-value" href={`tel:${phone.replace(/\s/g, "")}`}>{phone}</a>
+      </span>
+    </li>
+
+    <li class="v2-info-item">
+      <span class="v2-info-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+      </span>
+      <span>
+        <span class="v2-info-label">Ubicación</span>
+        <span class="v2-info-value">{location}</span>
+      </span>
+    </li>
+  </ul>
+
+  <div class="v2-socials">
+    <a
+      href={links.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.99 3.23 9.21 7.71 10.7.56.1.77-.24.77-.54v-1.9c-3.13.68-3.79-1.51-3.79-1.51-.51-1.31-1.25-1.66-1.25-1.66-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.43.11-2.97 0 0 .94-.3 3.09 1.16a10.74 10.74 0 0 1 5.62 0c2.15-1.46 3.09-1.16 3.09-1.16.61 1.54.23 2.68.11 2.97.72.79 1.16 1.8 1.16 3.03 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.09c0 .3.21.65.78.54 4.48-1.49 7.7-5.71 7.7-10.7C23.25 5.48 18.27.5 12 .5z"
+        ></path>
+      </svg>
+    </a>
+    <a
+      href={links.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LinkedIn"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v15H.22zM8.59 8h4.37v2.05h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.48 3.04 5.48 7v8.31h-4.56v-7.37c0-1.76-.03-4.03-2.45-4.03-2.45 0-2.83 1.92-2.83 3.9V23H8.59z"
+        ></path>
+      </svg>
+    </a>
+    <a
+      href={`mailto:${email}`}
+      aria-label="Email"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="m3 7 9 6 9-6"></path>
+      </svg>
+    </a>
+  </div>
+</aside>

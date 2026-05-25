@@ -6,6 +6,7 @@ const project = defineCollection({
         title: z.string(),
         description: z.string(),
         tags: z.string().array(),
+        category: z.string().default("web"),
         image: z.string(),
         urlGitHub: z.string(),
         urlView: z.string(),

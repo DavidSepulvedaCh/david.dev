@@ -1,67 +1,214 @@
 ---
-import { getCollection } from "astro:content";
-import MainLayout from "@/layouts/MainLayout.astro";
-import Header from "@/components/Header.astro";
-import NavigationBar from "@/components/NavigationBar.astro";
-import CardProject from "@/components/CardProject.astro";
-import AboutMe from "@/components/AboutMe.astro";
-import Skils from "@/components/Skils.astro";
-import Experience from "@/components/Experience.astro";
-import Footer from "@/components/Footer.astro";
-const projects = await getCollection("project");
+import Layout from "@/layouts/Layout.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import MainPanel from "@/components/MainPanel.astro";
 ---
 
-<MainLayout title="David Sepulveda">
-  <NavigationBar />
-  <div class="content">
-    <section id="about-me">
-      <Header />
-      <AboutMe />
-    </section>
-
-    <section id="skils">
-      <p class="title-section"><span>Habilidades</span></p>
-      <Skils />
-    </section>
-
-    <section id="experience">
-      <p class="title-section"><span>Experiencia</span></p>
-      <Experience />
-    </section>
-
-    <section id="projects">
-      <p class="title-section"><span>Proyectos</span></p>
-      <div class="projects">
-        {
-          projects.map((project) => (
-            <CardProject {...project.data} slug={project.slug} />
-          ))
-        }
-      </div>
-    </section>
+<Layout title="David Sepúlveda — Portafolio">
+  <div class="v2-shell">
+    <Sidebar />
+    <MainPanel />
   </div>
-  <Footer />
-</MainLayout>
+</Layout>
 
 <script>
-  let body = document.querySelector("body") as HTMLElement;
-  let footer = document.querySelector("footer") as HTMLElement;
+  /* ===== Tabs ===== */
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".v2-tab");
+  const panels = document.querySelectorAll<HTMLElement>(".v2-panel");
+  const indicator = document.querySelector<HTMLElement>(".v2-tab-indicator");
 
-  body.addEventListener("mousemove", (e) => {
-    let x = e.pageX - body.offsetLeft;
-    let y = e.pageY - body.offsetTop;
+  function moveIndicator(target: HTMLElement) {
+    if (!indicator) return;
+    const rect = target.getBoundingClientRect();
+    const parentRect = target.parentElement!.getBoundingClientRect();
+    indicator.style.width = `${rect.width}px`;
+    indicator.style.transform = `translateX(${rect.left - parentRect.left - 4}px)`;
+  }
 
-    if (!footer.contains(e.target as Node)) {
-      body.style.setProperty("--x", x + "px");
-      body.style.setProperty("--y", y + "px");
-    } else {
-      body.style.setProperty("--x", "0");
-      body.style.setProperty("--y", "0");
+  function activate(name: string) {
+    tabs.forEach((t) => {
+      const isActive = t.dataset.tab === name;
+      t.classList.toggle("is-active", isActive);
+      t.setAttribute("aria-selected", String(isActive));
+      if (isActive) moveIndicator(t);
+    });
+    panels.forEach((p) => {
+      p.classList.toggle("is-active", p.dataset.panel === name);
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => activate(tab.dataset.tab!));
+  });
+
+  // Init indicator after layout settles
+  requestAnimationFrame(() => {
+    const active = document.querySelector<HTMLElement>(".v2-tab.is-active");
+    if (active) moveIndicator(active);
+  });
+  window.addEventListener("resize", () => {
+    const active = document.querySelector<HTMLElement>(".v2-tab.is-active");
+    if (active) moveIndicator(active);
+  });
+
+  /* ===== Tema (menú: claro / oscuro / sistema) ===== */
+  const themeBtn = document.getElementById("v2-theme-toggle");
+  const themeMenu = document.getElementById("v2-theme-menu");
+  const themeOptions =
+    themeMenu?.querySelectorAll<HTMLButtonElement>(".v2-theme-option");
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+  type Pref = "light" | "dark" | "system";
+
+  const labelMap: Record<Pref, string> = {
+    light: "Tema: claro",
+    dark: "Tema: oscuro",
+    system: "Tema: sistema",
+  };
+
+  function resolve(pref: Pref): "light" | "dark" {
+    if (pref === "system") return systemDark.matches ? "dark" : "light";
+    return pref;
+  }
+
+  function applyPref(pref: Pref) {
+    const resolved = resolve(pref);
+    document.documentElement.setAttribute("data-v2-theme", resolved);
+    document.documentElement.setAttribute("data-v2-theme-pref", pref);
+    localStorage.setItem("v2-theme-pref", pref);
+    themeBtn?.setAttribute("aria-label", labelMap[pref]);
+    themeBtn?.setAttribute("title", labelMap[pref]);
+    themeOptions?.forEach((o) =>
+      o.setAttribute("aria-checked", String(o.dataset.pref === pref))
+    );
+  }
+
+  function openMenu() {
+    if (!themeMenu || !themeBtn) return;
+    themeMenu.hidden = false;
+    requestAnimationFrame(() => themeMenu.classList.add("is-open"));
+    themeBtn.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMenu() {
+    if (!themeMenu || !themeBtn) return;
+    themeMenu.classList.remove("is-open");
+    themeBtn.setAttribute("aria-expanded", "false");
+    // Wait for transition before hiding to keep it focusable while animating
+    setTimeout(() => {
+      if (themeBtn.getAttribute("aria-expanded") === "false") {
+        themeMenu.hidden = true;
+      }
+    }, 180);
+  }
+
+  const initialPref =
+    (localStorage.getItem("v2-theme-pref") as Pref | null) || "system";
+  applyPref(initialPref);
+
+  themeBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const expanded = themeBtn.getAttribute("aria-expanded") === "true";
+    expanded ? closeMenu() : openMenu();
+  });
+
+  themeOptions?.forEach((opt) => {
+    opt.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const pref = opt.dataset.pref as Pref | undefined;
+      if (pref) applyPref(pref);
+      closeMenu();
+      themeBtn?.focus();
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!themeMenu || themeMenu.hidden) return;
+    const target = e.target as Node;
+    if (!themeMenu.contains(target) && target !== themeBtn) closeMenu();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && themeBtn?.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+      themeBtn.focus();
     }
   });
 
-  body.addEventListener("mouseleave", () => {
-    body.style.setProperty("--x", "0");
-    body.style.setProperty("--y", "0");
+  // Follow OS changes when the user is on "system"
+  systemDark.addEventListener("change", () => {
+    const pref =
+      (document.documentElement.getAttribute("data-v2-theme-pref") as Pref) ||
+      "system";
+    if (pref === "system") applyPref("system");
+  });
+
+  /* ===== Tilt 3D suave en service cards ===== */
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+  if (!reduceMotion && finePointer) {
+    const tiltEls = document.querySelectorAll<HTMLElement>("[data-tilt]");
+    tiltEls.forEach((el) => {
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - y) * 2.5;
+        const ry = (x - 0.5) * 2.5;
+        el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-1px)`;
+        el.style.setProperty("--mx", `${x * 100}%`);
+        el.style.setProperty("--my", `${y * 100}%`);
+      });
+      el.addEventListener("mouseleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  /* ===== Duración de experiencia en tiempo real ===== */
+  function formatDur(start: string, end: string): string {
+    const [sy, sm] = start.split("-").map(Number);
+    let ey: number, em: number;
+    if (end) {
+      [ey, em] = end.split("-").map(Number);
+    } else {
+      const n = new Date();
+      ey = n.getFullYear();
+      em = n.getMonth() + 1;
+    }
+    let months = (ey - sy) * 12 + (em - sm);
+    if (months < 1) months = 1;
+    const years = Math.floor(months / 12);
+    const rem = months % 12;
+    const yp = years > 0 ? `${years} ${years === 1 ? "año" : "años"}` : "";
+    const mp = rem > 0 ? `${rem} ${rem === 1 ? "mes" : "meses"}` : "";
+    return yp && mp ? `${yp} y ${mp}` : yp || mp;
+  }
+
+  function updateDurations() {
+    document.querySelectorAll<HTMLElement>(".v2-duration").forEach((el) => {
+      const s = el.dataset.start;
+      if (!s) return;
+      el.textContent = formatDur(s, el.dataset.end || "");
+    });
+  }
+  updateDurations();
+  // Recomputa cada hora por si la página queda abierta
+  setInterval(updateDurations, 60 * 60 * 1000);
+
+  /* ===== Portfolio filter ===== */
+  const filters = document.querySelectorAll<HTMLButtonElement>(".v2-filter");
+  const items = document.querySelectorAll<HTMLElement>(".v2-project");
+
+  filters.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filters.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const f = btn.dataset.filter;
+      items.forEach((it) => {
+        const show = f === "all" || it.dataset.cat === f;
+        it.style.display = show ? "" : "none";
+      });
+    });
   });
 </script>

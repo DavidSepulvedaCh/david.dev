@@ -1,6 +1,6 @@
 @font-face {
   font-family: "ProductSans";
-  src: url("/public/fonts/ProductSans-Bold.woff") format("woff");
+  src: url("/david.dev/fonts/ProductSans-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: "ProductSans";
-  src: url("/public/fonts/ProductSans-Light.woff") format("woff");
+  src: url("/david.dev/fonts/ProductSans-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: "ProductSans";
-  src: url("/public/fonts/ProductSans-Regular.woff") format("woff");
+  src: url("/david.dev/fonts/ProductSans-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -24,60 +24,10 @@
 
 @font-face {
   font-family: "ProductSans";
-  src: url("/public/fonts/ProductSans-Medium.woff") format("woff");
+  src: url("/david.dev/fonts/ProductSans-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-:root {
-  --base-background-color: #fff;
-  --text-color: #000;
-  --secondary-color: #636363;
-  --tertiary-color: #999;
-  --hover-background-color: rgba(43, 54, 80, 0.5);
-  --contact-background-color: rgba(139, 139, 139, 0.281);
-  --hover-background-navbar: rgba(151, 151, 151, 0.373);
-  --background-navbar: rgba(188, 188, 188, 0.576);
-  --background-footer: #bcbcbc;
-  --glowing-color: radial-gradient(
-    #8a8a8a2f,
-    #a3a3a356,
-    transparent,
-    transparent
-  );
-  --logo: "/david.dev/img/Lg_BN.png";
-  --title-section-color: #636363;
-  --title-section-gradient: linear-gradient(90deg, #52525a 0%, #494e55 100%);
-}
-
-.darkmode {
-  --base-background-color: radial-gradient(
-    circle at right top,
-    #1f2f4a,
-    #0d1015
-  );
-  --text-color: #fff;
-  --secondary-color: #a8a8a8;
-  --tertiary-color: #999;
-  --hover-background-color: rgba(43, 54, 80, 0.5);
-  --contact-background-color: rgba(43, 54, 80, 0.5);
-  --hover-background-navbar: rgba(43, 54, 80, 0.5);
-  --background-navbar: rgba(20, 31, 53, 0.576);
-  --background-footer: #17181c;
-  --glowing-color: radial-gradient(
-    #192740f1,
-    #192740d1,
-    transparent,
-    transparent
-  );
-  --title-section-color: #fff;
-  --logo: "/david.dev/img/Lg_BN.png";
-  --title-section-gradient: linear-gradient(90deg, #fff 0%, #b3b3e6 100%);
 }
 
 * {
@@ -85,62 +35,20 @@ html {
   padding: 0;
 }
 
-body {
-  max-width: 1400px;
-  font-family: "ProductSans";
-  background: var(--base-background-color);
-  overflow-x: hidden;
-  margin: 0 auto;
+html {
+  scroll-behavior: smooth;
 }
 
-body::before {
-  content: "";
-  position: absolute;
-  top: var(--y);
-  left: var(--x);
-  transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
-  background: var(--glowing-color);
-  overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
-}
-
-body:hover::before {
-  opacity: 1;
-}
-
-.content {
-  margin: 100px 20px;
-  position: relative;
-  overflow-x: hidden;
-}
-
-.title-section span {
-  background: var(--title-section-gradient);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-  font-size: 35px;
-}
-
-.label-section {
-  color: #fff;
-  font-size: 20px;
-  font-weight: lighter;
-  margin: 15px 0 30px 0;
-}
-
-@media (max-width: 768px) {
-  .footer-links {
-    flex-wrap: wrap;
-    margin-bottom: 10px;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .social-icon {
-    margin-bottom: 10px;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

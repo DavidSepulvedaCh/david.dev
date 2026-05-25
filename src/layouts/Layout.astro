@@ -1,0 +1,64 @@
+---
+import "@/styles/global.css";
+import "@/styles/portfolio.css";
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = "Portafolio de David Leonardo Sepúlveda Chávez — Ingeniero de sistemas e desarrollador web.",
+} = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL("/david.dev/img/Lg_BN.png", Astro.site).toString();
+const fontBase = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/fonts`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d1015" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" href="/david.dev/img/Lg_BN.png" type="image/png" />
+    <title>{title}</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <link
+      rel="preload"
+      href={`${fontBase}/ProductSans-Bold.woff`}
+      as="font"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={`${fontBase}/ProductSans-Regular.woff`}
+      as="font"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
+
+    <script is:inline>
+      const pref = localStorage.getItem("v2-theme-pref") || "system";
+      const resolved =
+        pref === "system"
+          ? window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark"
+          : pref;
+      document.documentElement.setAttribute("data-v2-theme", resolved);
+      document.documentElement.setAttribute("data-v2-theme-pref", pref);
+    </script>
+  </head>
+  <body class="v2">
+    <slot />
+  </body>
+</html>

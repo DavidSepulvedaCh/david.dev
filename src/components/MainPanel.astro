@@ -1,0 +1,522 @@
+---
+import { getCollection } from "astro:content";
+import { experiences, skills } from "@/cv.json";
+import Angular from "@/icons/angular.astro";
+import AstroIcon from "@/icons/astro.astro";
+import Bootstrap from "@/icons/bootstrap.astro";
+import CSS from "@/icons/css3.astro";
+import HTML from "@/icons/html5.astro";
+import JavaScript from "@/icons/javascript.astro";
+import MongoDB from "@/icons/mongodb.astro";
+import MySQL from "@/icons/mysql.astro";
+import NodeJs from "@/icons/nodejs.astro";
+import Sass from "@/icons/sass.astro";
+import Typescript from "@/icons/typescript.astro";
+const projects = await getCollection("project");
+
+const categoryLabels: Record<string, string> = {
+  web: "Web",
+  desktop: "Desktop",
+  mobile: "Mobile",
+  tool: "Herramienta",
+  game: "Juego",
+  other: "Otro",
+};
+
+function labelFor(cat: string): string {
+  return categoryLabels[cat] ?? cat.charAt(0).toUpperCase() + cat.slice(1);
+}
+
+const projectCategories = Array.from(
+  new Set(projects.map((p: any) => p.data.category))
+).sort();
+
+function formatDuration(start: string, end: string | null): string {
+  const [sy, sm] = start.split("-").map(Number);
+  let ey: number, em: number;
+  if (end) {
+    [ey, em] = end.split("-").map(Number);
+  } else {
+    const n = new Date();
+    ey = n.getFullYear();
+    em = n.getMonth() + 1;
+  }
+  let months = (ey - sy) * 12 + (em - sm);
+  if (months < 1) months = 1;
+  const years = Math.floor(months / 12);
+  const rem = months % 12;
+  const yearPart = years > 0 ? `${years} ${years === 1 ? "año" : "años"}` : "";
+  const monthPart = rem > 0 ? `${rem} ${rem === 1 ? "mes" : "meses"}` : "";
+  if (yearPart && monthPart) return `${yearPart} y ${monthPart}`;
+  return yearPart || monthPart;
+}
+
+const skillIcons: Record<string, any> = {
+  Angular,
+  Astro: AstroIcon,
+  Bootstrap,
+  CSS,
+  HTML,
+  JavaScript,
+  MongoDB,
+  MySQL,
+  NodeJs,
+  Sass,
+  Typescript,
+};
+
+const services = [
+  {
+    title: "Desarrollo Web",
+    desc: "Construcción de aplicaciones web modernas, accesibles y escalables con Angular, Astro y Node.",
+    icon: "code",
+  },
+  {
+    title: "Interfaces UI",
+    desc: "Diseño e implementación de interfaces responsive con foco en experiencia de usuario.",
+    icon: "layout",
+  },
+  {
+    title: "Backend & APIs",
+    desc: "APIs REST con Node y Express, integración con MySQL y MongoDB, autenticación y despliegue.",
+    icon: "server",
+  },
+  {
+    title: "Automatización",
+    desc: "Automatización de procesos internos para mejorar la eficiencia del equipo.",
+    icon: "zap",
+  },
+];
+
+const stats = [
+  { value: "5+", label: "años aprendiendo" },
+  { value: `${projects.length}+`, label: "proyectos publicados" },
+  { value: `${skills.length}`, label: "tecnologías" },
+];
+
+const tabs = [
+  { label: "Sobre mí", id: "about" },
+  { label: "Trayectoria", id: "resume" },
+  { label: "Proyectos", id: "portfolio" },
+  { label: "Contacto", id: "contact" },
+];
+---
+
+<section class="v2-main" aria-label="Contenido principal">
+  <header class="v2-topbar">
+    <nav class="v2-tabs" role="tablist" aria-label="Secciones">
+      <span class="v2-tab-indicator" aria-hidden="true"></span>
+      {
+        tabs.map((tab, i) => (
+          <button
+            type="button"
+            class={`v2-tab ${i === 0 ? "is-active" : ""}`}
+            data-tab={tab.id}
+            role="tab"
+            aria-selected={i === 0 ? "true" : "false"}
+          >
+            {tab.label}
+          </button>
+        ))
+      }
+    </nav>
+
+    <div class="v2-theme-wrap">
+      <button
+        type="button"
+        class="v2-theme-toggle"
+        id="v2-theme-toggle"
+        aria-label="Cambiar tema"
+        title="Cambiar tema"
+        aria-haspopup="menu"
+        aria-expanded="false"
+      >
+        <svg
+          class="v2-theme-icon"
+          data-icon="light"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg
+          class="v2-theme-icon"
+          data-icon="dark"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg
+          class="v2-theme-icon"
+          data-icon="system"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="2" y="4" width="20" height="14" rx="2"></rect>
+          <path d="M8 22h8M12 18v4"></path>
+        </svg>
+      </button>
+
+      <div
+        class="v2-theme-menu"
+        id="v2-theme-menu"
+        role="menu"
+        aria-labelledby="v2-theme-toggle"
+        hidden
+      >
+        {
+          [
+            { pref: "light", label: "Claro" },
+            { pref: "dark", label: "Oscuro" },
+            { pref: "system", label: "Sistema" },
+          ].map((opt) => (
+            <button
+              type="button"
+              class="v2-theme-option"
+              role="menuitemradio"
+              data-pref={opt.pref}
+              aria-checked="false"
+            >
+              <span class="v2-theme-option-icon" aria-hidden="true">
+                {opt.pref === "light" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                  </svg>
+                )}
+                {opt.pref === "dark" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                )}
+                {opt.pref === "system" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="14" rx="2" />
+                    <path d="M8 22h8M12 18v4" />
+                  </svg>
+                )}
+              </span>
+              <span class="v2-theme-option-label">{opt.label}</span>
+              <svg
+                class="v2-theme-option-check"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </header>
+
+  <div class="v2-panels">
+    <!-- ABOUT -->
+    <article class="v2-panel is-active" data-panel="about" role="tabpanel">
+      <h2 class="v2-h1">Sobre mí</h2>
+      <p class="v2-prose">
+        Soy <strong>David Sepúlveda</strong>, ingeniero de sistemas e informática
+        radicado en Bucaramanga. Mi carrera empezó en 2020 estudiando Ingeniería
+        de Sistemas; desde entonces he profundizado en el <strong>desarrollo web</strong>,
+        una de las áreas que más me apasionan.
+      </p>
+      <div class="v2-stats">
+        {
+          stats.map((s) => (
+            <div class="v2-stat">
+              <p class="v2-stat-value">{s.value}</p>
+              <span class="v2-stat-label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+
+      <h3 class="v2-h2">Lo que hago</h3>
+      <div class="v2-services">
+        {
+          services.map((s) => (
+            <div class="v2-service" data-tilt>
+              <div class="v2-service-icon" aria-hidden="true">
+                {s.icon === "code" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                )}
+                {s.icon === "layout" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <path d="M3 9h18M9 21V9" />
+                  </svg>
+                )}
+                {s.icon === "server" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="7" rx="1" />
+                    <rect x="2" y="14" width="20" height="7" rx="1" />
+                    <path d="M6 6.5h.01M6 17.5h.01" />
+                  </svg>
+                )}
+                {s.icon === "zap" && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                )}
+              </div>
+              <div>
+                <p class="v2-service-title">{s.title}</p>
+                <p class="v2-service-desc">{s.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </article>
+
+    <!-- RESUME -->
+    <article class="v2-panel" data-panel="resume" role="tabpanel">
+      <h2 class="v2-h1">Trayectoria</h2>
+      <p class="v2-prose">
+        Mi recorrido combina formación universitaria, prácticas en el sector
+        público y experiencia en industria.
+      </p>
+
+      <h3 class="v2-h2">Experiencia</h3>
+      <div class="v2-timeline">
+        {
+          experiences
+            .slice()
+            .reverse()
+            .map((exp) => (
+              <div class="v2-timeline-item">
+                <p class="v2-timeline-role">{exp.title}</p>
+                <span class="v2-timeline-org">{exp.company}</span>
+                <p class="v2-timeline-date">
+                  <span>{exp.date}</span>
+                  <span class="v2-dot">·</span>
+                  <span
+                    class="v2-duration"
+                    data-start={exp.startDate}
+                    data-end={exp.endDate ?? ""}
+                  >
+                    {formatDuration(exp.startDate, exp.endDate)}
+                  </span>
+                </p>
+                <p class="v2-timeline-desc">{exp.description}</p>
+              </div>
+            ))
+        }
+      </div>
+
+      <h3 class="v2-h2">Habilidades técnicas</h3>
+      <ul class="v2-skills">
+        {
+          skills.map((s) => {
+            const Icon = skillIcons[s];
+            return (
+              <li class="v2-skill">
+                {Icon && (
+                  <span class="v2-skill-icon" aria-hidden="true">
+                    <Icon />
+                  </span>
+                )}
+                <span class="v2-skill-name">{s}</span>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </article>
+
+    <!-- PORTFOLIO -->
+    <article class="v2-panel" data-panel="portfolio" role="tabpanel">
+      <h2 class="v2-h1">Proyectos</h2>
+      <p class="v2-prose">
+        Selección de trabajos personales y profesionales. Click en cualquier
+        tarjeta para ver el repositorio.
+      </p>
+
+      <div class="v2-filters" role="tablist" aria-label="Filtrar proyectos">
+        <button type="button" class="v2-filter is-active" data-filter="all">
+          Todos
+        </button>
+        {
+          projectCategories.map((cat) => (
+            <button type="button" class="v2-filter" data-filter={cat}>
+              {labelFor(cat)}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="v2-grid">
+        {
+          projects.map((p: any) => {
+            const cat = p.data.category;
+            return (
+              <article class="v2-project" data-cat={cat}>
+                <div class="v2-project-img">
+                  <img
+                    src={p.data.image}
+                    alt={`Captura del proyecto ${p.data.title}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div class="v2-project-actions">
+                    <a
+                      href={p.data.urlGitHub}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="v2-project-action"
+                      aria-label={`Repositorio de ${p.data.title} en GitHub`}
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.99 3.23 9.21 7.71 10.7.56.1.77-.24.77-.54v-1.9c-3.13.68-3.79-1.51-3.79-1.51-.51-1.31-1.25-1.66-1.25-1.66-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.43.11-2.97 0 0 .94-.3 3.09 1.16a10.74 10.74 0 0 1 5.62 0c2.15-1.46 3.09-1.16 3.09-1.16.61 1.54.23 2.68.11 2.97.72.79 1.16 1.8 1.16 3.03 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.09c0 .3.21.65.78.54 4.48-1.49 7.7-5.71 7.7-10.7C23.25 5.48 18.27.5 12 .5z" />
+                      </svg>
+                    </a>
+                    {p.data.urlView && (
+                      <a
+                        href={p.data.urlView}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="v2-project-action"
+                        aria-label={`Ver demo de ${p.data.title}`}
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <div class="v2-project-body">
+                  <span class="v2-project-cat">{labelFor(cat)}</span>
+                  <p class="v2-project-title">{p.data.title}</p>
+                  <p class="v2-project-desc">{p.data.description}</p>
+                  <ul class="v2-project-tags">
+                    {p.data.tags.map((t: string) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </article>
+
+    <!-- CONTACT -->
+    <article class="v2-panel" data-panel="contact" role="tabpanel">
+      <h2 class="v2-h1">Hablemos</h2>
+      <p class="v2-prose">
+        ¿Tienes una idea, una propuesta de trabajo o simplemente quieres charlar
+        sobre código? Estoy disponible por cualquiera de estos medios.
+      </p>
+
+      <div class="v2-contact-grid">
+        <a class="v2-contact-card" href="mailto:sdavidleonardo01@gmail.com">
+          <div class="v2-contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="m3 7 9 6 9-6"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="v2-contact-label">Email</span>
+            <span class="v2-contact-value">sdavidleonardo01@gmail.com</span>
+          </div>
+        </a>
+
+        <a
+          class="v2-contact-card"
+          href="https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="v2-contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v15H.22zM8.59 8h4.37v2.05h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.48 3.04 5.48 7v8.31h-4.56v-7.37c0-1.76-.03-4.03-2.45-4.03-2.45 0-2.83 1.92-2.83 3.9V23H8.59z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <span class="v2-contact-label">LinkedIn</span>
+            <span class="v2-contact-value">/in/david-leonardo-sepúlveda</span>
+          </div>
+        </a>
+
+        <a
+          class="v2-contact-card"
+          href="https://github.com/DavidSepulvedaCh"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="v2-contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.99 3.23 9.21 7.71 10.7.56.1.77-.24.77-.54v-1.9c-3.13.68-3.79-1.51-3.79-1.51-.51-1.31-1.25-1.66-1.25-1.66-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.43.11-2.97 0 0 .94-.3 3.09 1.16a10.74 10.74 0 0 1 5.62 0c2.15-1.46 3.09-1.16 3.09-1.16.61 1.54.23 2.68.11 2.97.72.79 1.16 1.8 1.16 3.03 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.09c0 .3.21.65.78.54 4.48-1.49 7.7-5.71 7.7-10.7C23.25 5.48 18.27.5 12 .5z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <span class="v2-contact-label">GitHub</span>
+            <span class="v2-contact-value">@DavidSepulvedaCh</span>
+          </div>
+        </a>
+
+        <a
+          class="v2-contact-card"
+          href="https://drive.google.com/file/d/1meCTj9RI4RBBDdydyFjbVL_zQe2cbBmU/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="v2-contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg>
+          </div>
+          <div>
+            <span class="v2-contact-label">CV</span>
+            <span class="v2-contact-value">Ver / descargar</span>
+          </div>
+        </a>
+      </div>
+
+    </article>
+  </div>
+</section>
