@@ -19,10 +19,28 @@ import MainPanel from "@/components/MainPanel.astro";
 
   function moveIndicator(target: HTMLElement) {
     if (!indicator) return;
-    const rect = target.getBoundingClientRect();
-    const parentRect = target.parentElement!.getBoundingClientRect();
-    indicator.style.width = `${rect.width}px`;
-    indicator.style.transform = `translateX(${rect.left - parentRect.left - 4}px)`;
+    const parent = target.parentElement;
+    const padLeft = parent
+      ? parseFloat(getComputedStyle(parent).paddingLeft) || 0
+      : 0;
+    indicator.style.width = `${target.offsetWidth}px`;
+    indicator.style.transform = `translateX(${target.offsetLeft - padLeft}px)`;
+  }
+
+  function ensureTabVisible(target: HTMLElement) {
+    const parent = target.parentElement;
+    if (!parent) return;
+    if (parent.scrollWidth <= parent.clientWidth) return;
+    const left = target.offsetLeft;
+    const right = left + target.offsetWidth;
+    const viewLeft = parent.scrollLeft;
+    const viewRight = viewLeft + parent.clientWidth;
+    if (left < viewLeft || right > viewRight) {
+      parent.scrollTo({
+        left: left + target.offsetWidth / 2 - parent.clientWidth / 2,
+        behavior: "smooth",
+      });
+    }
   }
 
   function activate(name: string) {
@@ -30,7 +48,10 @@ import MainPanel from "@/components/MainPanel.astro";
       const isActive = t.dataset.tab === name;
       t.classList.toggle("is-active", isActive);
       t.setAttribute("aria-selected", String(isActive));
-      if (isActive) moveIndicator(t);
+      if (isActive) {
+        moveIndicator(t);
+        ensureTabVisible(t);
+      }
     });
     panels.forEach((p) => {
       p.classList.toggle("is-active", p.dataset.panel === name);
