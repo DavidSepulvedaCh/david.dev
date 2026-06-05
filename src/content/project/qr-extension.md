@@ -4,6 +4,6 @@ description: "Extensión de navegador para convertir cualquier texto seleccionad
 image: "/david.dev/img/qr_extension.png"
 tags: ["JS", "WebExtension"]
 category: "web"
-urlGitHub: "https://github.com/DavidSepulvedaCh/text-to-qr-extension"
+urlGitHub: "https://github.com/DavidSepulvedaCh/qr-extension"
 urlView: ""
 ---
