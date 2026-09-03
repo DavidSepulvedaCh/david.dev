@@ -1,21 +1,24 @@
 ---
 import "@/styles/global.css";
 import "@/styles/portfolio.css";
+import { defaultLang, languages, localePath, type Lang } from "@/i18n/ui";
 interface Props {
   title: string;
-  description?: string;
+  description: string;
+  lang: Lang;
 }
-const {
-  title,
-  description = "Portafolio de David Leonardo Sepúlveda Chávez — Ingeniero de sistemas e desarrollador web.",
-} = Astro.props;
+const { title, description, lang } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL("/david.dev/img/Lg_BN.png", Astro.site).toString();
 const fontBase = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/fonts`;
+const alternates = (Object.keys(languages) as Lang[]).map((code) => ({
+  code,
+  href: new URL(localePath(code), Astro.site).toString(),
+}));
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -25,6 +28,16 @@ const fontBase = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/fonts`;
     <meta name="theme-color" content="#0d1015" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {
+      alternates.map((alt) => (
+        <link rel="alternate" hreflang={alt.code} href={alt.href} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(localePath(defaultLang), Astro.site).toString()}
+    />
     <link rel="icon" href="/david.dev/img/Lg_BN.png" type="image/png" />
     <title>{title}</title>
 
@@ -33,6 +46,7 @@ const fontBase = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/fonts`;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "es_CO"} />
 
     <link
       rel="preload"

@@ -1,0 +1,99 @@
+---
+import { getCollection } from "astro:content";
+import { experiences, skills } from "@/cv.json";
+import { yearsSince } from "@/lib/dates";
+import { useTranslations, type Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getCollection("project");
+
+// Inicio de la carrera profesional: la experiencia más antigua del CV.
+const careerStart = experiences
+  .map((exp) => exp.startDate)
+  .sort()
+  .at(0)!;
+
+// Los textos viven en el diccionario; aquí solo el icono de cada servicio.
+const serviceIcons = ["code", "layout", "server", "zap"];
+const services = t.about.services.map((s, i) => ({
+  ...s,
+  icon: serviceIcons[i],
+}));
+
+const stats = [
+  {
+    value: `${yearsSince(careerStart)}+`,
+    label: t.about.statExperience,
+    since: careerStart,
+  },
+  { value: `${projects.length}+`, label: t.about.statProjects },
+  { value: `${skills.length}`, label: t.about.statSkills },
+];
+---
+
+<article
+  class="v2-panel is-active"
+  id="v2-panel-about"
+  data-panel="about"
+  role="tabpanel"
+  aria-labelledby="v2-tab-about"
+>
+  <h2 class="v2-h1">{t.about.title}</h2>
+  <p class="v2-prose">
+    <strong>{t.about.strong}</strong>{t.about.body}
+  </p>
+  <div class="v2-stats">
+    {
+      stats.map((s) => (
+        <div class="v2-stat">
+          <p class="v2-stat-value" data-years-since={s.since}>{s.value}</p>
+          <span class="v2-stat-label">{s.label}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <h3 class="v2-h2">{t.about.servicesTitle}</h3>
+  <div class="v2-services">
+    {
+      services.map((s) => (
+        <div class="v2-service" data-tilt>
+          <div class="v2-service-icon" aria-hidden="true">
+            {s.icon === "code" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+            )}
+            {s.icon === "layout" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18M9 21V9" />
+              </svg>
+            )}
+            {s.icon === "server" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="7" rx="1" />
+                <rect x="2" y="14" width="20" height="7" rx="1" />
+                <path d="M6 6.5h.01M6 17.5h.01" />
+              </svg>
+            )}
+            {s.icon === "zap" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+              </svg>
+            )}
+          </div>
+          <div>
+            <p class="v2-service-title">{s.title}</p>
+            <p class="v2-service-desc">{s.desc}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</article>

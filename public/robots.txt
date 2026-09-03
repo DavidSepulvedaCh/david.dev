@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://davidsepulvedach.github.io/david.dev/sitemap-index.xml

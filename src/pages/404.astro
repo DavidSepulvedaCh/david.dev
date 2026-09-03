@@ -1,0 +1,83 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { localePath, useTranslations } from "@/i18n/ui";
+
+const es = useTranslations("es");
+const en = useTranslations("en");
+const homeEs = localePath("es");
+const homeEn = localePath("en");
+
+const sections = [
+  { id: "about", es: es.nav.about, en: en.nav.about },
+  { id: "resume", es: es.nav.resume, en: en.nav.resume },
+  { id: "portfolio", es: es.nav.projects, en: en.nav.projects },
+  { id: "contact", es: es.nav.contact, en: en.nav.contact },
+];
+---
+
+<Layout
+  title="404 — David Sepúlveda"
+  description="La página que buscas no existe."
+  lang="es"
+>
+  <main class="v2-404">
+    <p class="v2-404-code" aria-hidden="true">404</p>
+
+    <h1
+      class="v2-404-title"
+      data-es="Esta página no existe"
+      data-en="This page doesn't exist"
+    >
+      Esta página no existe
+    </h1>
+
+    <p
+      class="v2-404-text"
+      data-es="El enlace que seguiste puede estar roto, o la página cambió de sitio. Desde aquí puedes volver al portafolio."
+      data-en="The link you followed may be broken, or the page may have moved. You can head back to the portfolio from here."
+    >
+      El enlace que seguiste puede estar roto, o la página cambió de sitio.
+      Desde aquí puedes volver al portafolio.
+    </p>
+
+    <ul class="v2-404-links">
+      {
+        sections.map((s) => (
+          <li>
+            <a
+              class="v2-cert"
+              href={`${homeEs}#${s.id}`}
+              data-home={s.id}
+              data-es={s.es}
+              data-en={s.en}
+            >
+              {s.es}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+
+  <script is:inline define:vars={{ homeEs, homeEn }}>
+    // GitHub Pages sirve este mismo archivo para /en/*: elige el idioma
+    // por la ruta pedida y, si no, por el del navegador.
+    const path = location.pathname;
+    const wantsEn = path.startsWith(homeEn)
+      ? true
+      : path.startsWith(homeEs) && path !== homeEs
+        ? false
+        : (navigator.language || "").toLowerCase().startsWith("en");
+
+    if (wantsEn) {
+      document.documentElement.lang = "en";
+      document.title = "404 — David Sepúlveda";
+      document.querySelectorAll("[data-en]").forEach((el) => {
+        el.textContent = el.dataset.en;
+      });
+      document.querySelectorAll("[data-home]").forEach((el) => {
+        el.href = `${homeEn}#${el.dataset.home}`;
+      });
+    }
+  </script>
+</Layout>

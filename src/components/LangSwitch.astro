@@ -1,0 +1,81 @@
+---
+import { languages, localePath, useTranslations, type Lang } from "@/i18n/ui";
+interface Props {
+  lang: Lang;
+  /** El switch se renderiza dos veces (topbar y sidebar); solo una es visible. */
+  variant?: "topbar" | "compact";
+}
+const { lang, variant = "topbar" } = Astro.props;
+const t = useTranslations(lang);
+const codes = Object.keys(languages) as Lang[];
+// Los clipPath necesitan ids únicos: hay dos instancias en el documento.
+const uid = variant;
+---
+
+<div
+  class:list={["v2-lang-switch", variant === "compact" && "is-compact"]}
+  role="group"
+  aria-label={t.a11y.language}
+>
+  {
+    codes.map((code) => (
+      <a
+        class="v2-lang-opt"
+        data-lang-link
+        href={localePath(code)}
+        hreflang={code}
+        aria-label={t.a11y.switchTo[code]}
+        title={languages[code]}
+        aria-current={code === lang ? "page" : undefined}
+      >
+        {code === "es" ? (
+          <svg class="v2-flag" viewBox="0 0 24 16" aria-hidden="true">
+            <clipPath id={`v2-flag-co-${uid}`}>
+              <rect width="24" height="16" rx="3" />
+            </clipPath>
+            <g clip-path={`url(#v2-flag-co-${uid})`}>
+              <rect width="24" height="8" fill="#FCD116" />
+              <rect y="8" width="24" height="4" fill="#003893" />
+              <rect y="12" width="24" height="4" fill="#CE1126" />
+            </g>
+          </svg>
+        ) : (
+          <svg class="v2-flag" viewBox="0 0 24 16" aria-hidden="true">
+            <clipPath id={`v2-flag-us-${uid}`}>
+              <rect width="24" height="16" rx="3" />
+            </clipPath>
+            <g clip-path={`url(#v2-flag-us-${uid})`}>
+              <rect width="24" height="16" fill="#FFFFFF" />
+              <g fill="#B22234">
+                <rect y="0" width="24" height="1.23" />
+                <rect y="2.46" width="24" height="1.23" />
+                <rect y="4.92" width="24" height="1.23" />
+                <rect y="7.38" width="24" height="1.23" />
+                <rect y="9.85" width="24" height="1.23" />
+                <rect y="12.31" width="24" height="1.23" />
+                <rect y="14.77" width="24" height="1.23" />
+              </g>
+              <rect width="9.6" height="8.62" fill="#3C3B6E" />
+              <g fill="#FFFFFF">
+                <circle cx="1.6" cy="1.7" r="0.5" />
+                <circle cx="3.2" cy="1.7" r="0.5" />
+                <circle cx="4.8" cy="1.7" r="0.5" />
+                <circle cx="6.4" cy="1.7" r="0.5" />
+                <circle cx="8" cy="1.7" r="0.5" />
+                <circle cx="2.4" cy="4.3" r="0.5" />
+                <circle cx="4" cy="4.3" r="0.5" />
+                <circle cx="5.6" cy="4.3" r="0.5" />
+                <circle cx="7.2" cy="4.3" r="0.5" />
+                <circle cx="1.6" cy="6.9" r="0.5" />
+                <circle cx="3.2" cy="6.9" r="0.5" />
+                <circle cx="4.8" cy="6.9" r="0.5" />
+                <circle cx="6.4" cy="6.9" r="0.5" />
+                <circle cx="8" cy="6.9" r="0.5" />
+              </g>
+            </g>
+          </svg>
+        )}
+      </a>
+    ))
+  }
+</div>

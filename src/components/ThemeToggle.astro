@@ -1,0 +1,124 @@
+---
+import { useTranslations, type Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const options = [
+  { pref: "light", label: t.theme.light },
+  { pref: "dark", label: t.theme.dark },
+  { pref: "system", label: t.theme.system },
+];
+---
+
+<div class="v2-theme-wrap">
+  <button
+    type="button"
+    class="v2-theme-toggle"
+    id="v2-theme-toggle"
+    aria-label={t.a11y.changeTheme}
+    title={t.a11y.changeTheme}
+    aria-haspopup="menu"
+    aria-expanded="false"
+  >
+    <svg
+      class="v2-theme-icon"
+      data-icon="light"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="4"></circle>
+      <path
+        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+      ></path>
+    </svg>
+    <svg
+      class="v2-theme-icon"
+      data-icon="dark"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    <svg
+      class="v2-theme-icon"
+      data-icon="system"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="4" width="20" height="14" rx="2"></rect>
+      <path d="M8 22h8M12 18v4"></path>
+    </svg>
+  </button>
+
+  <div
+    class="v2-theme-menu"
+    id="v2-theme-menu"
+    role="menu"
+    aria-labelledby="v2-theme-toggle"
+    hidden
+  >
+    {
+      options.map((opt) => (
+        <button
+          type="button"
+          class="v2-theme-option"
+          role="menuitemradio"
+          data-pref={opt.pref}
+          aria-checked="false"
+        >
+          <span class="v2-theme-option-icon" aria-hidden="true">
+            {opt.pref === "light" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+              </svg>
+            )}
+            {opt.pref === "dark" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+            {opt.pref === "system" && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="14" rx="2" />
+                <path d="M8 22h8M12 18v4" />
+              </svg>
+            )}
+          </span>
+          <span class="v2-theme-option-label">{opt.label}</span>
+          <svg
+            class="v2-theme-option-check"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </button>
+      ))
+    }
+  </div>
+</div>

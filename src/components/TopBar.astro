@@ -1,0 +1,45 @@
+---
+import LangSwitch from "@/components/LangSwitch.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import { useTranslations, type Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const tabs = [
+  { label: t.nav.about, id: "about" },
+  { label: t.nav.resume, id: "resume" },
+  { label: t.nav.projects, id: "portfolio" },
+  { label: t.nav.contact, id: "contact" },
+];
+---
+
+<header class="v2-topbar">
+  <nav class="v2-tabs" role="tablist" aria-label={t.a11y.sections}>
+    <span class="v2-tab-indicator" aria-hidden="true"></span>
+    {
+      tabs.map((tab, i) => (
+        <button
+          type="button"
+          class={`v2-tab ${i === 0 ? "is-active" : ""}`}
+          id={`v2-tab-${tab.id}`}
+          data-tab={tab.id}
+          role="tab"
+          aria-controls={`v2-panel-${tab.id}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </nav>
+
+  <div class="v2-actions">
+    <LangSwitch lang={lang} />
+    <ThemeToggle lang={lang} />
+  </div>
+</header>

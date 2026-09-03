@@ -1,0 +1,122 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { field, useTranslations, type Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getCollection("project");
+
+function labelFor(cat: string): string {
+  return (
+    t.projects.categories[cat] ?? cat.charAt(0).toUpperCase() + cat.slice(1)
+  );
+}
+
+const projectCategories = Array.from(
+  new Set(projects.map((p: any) => p.data.category))
+).sort();
+---
+
+<article
+  class="v2-panel"
+  id="v2-panel-portfolio"
+  data-panel="portfolio"
+  role="tabpanel"
+  aria-labelledby="v2-tab-portfolio"
+>
+  <h2 class="v2-h1">{t.projects.title}</h2>
+  <p class="v2-prose">{t.projects.intro}</p>
+
+  <div class="v2-filters" role="tablist" aria-label={t.a11y.filterProjects}>
+    <button type="button" class="v2-filter is-active" data-filter="all">
+      {t.projects.all}
+    </button>
+    {
+      projectCategories.map((cat) => (
+        <button type="button" class="v2-filter" data-filter={cat}>
+          {labelFor(cat)}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="v2-grid">
+    {
+      projects.map((p: any) => {
+        const cat = p.data.category;
+        const name = field(p.data, "title", lang);
+        return (
+          <article class="v2-project" data-cat={cat}>
+            <div class="v2-project-img">
+              <Image
+                src={p.data.image}
+                alt={t.projects.screenshotAlt(name)}
+                width={960}
+                height={600}
+                widths={[480, 960]}
+                sizes="(max-width: 768px) 100vw, 420px"
+                quality={92}
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="v2-project-actions">
+                {p.data.urlGitHub && (
+                  <a
+                    href={p.data.urlGitHub}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="v2-project-action"
+                    aria-label={t.projects.repoAria(name)}
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.99 3.23 9.21 7.71 10.7.56.1.77-.24.77-.54v-1.9c-3.13.68-3.79-1.51-3.79-1.51-.51-1.31-1.25-1.66-1.25-1.66-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.93.1-.73.39-1.22.71-1.5-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.43.11-2.97 0 0 .94-.3 3.09 1.16a10.74 10.74 0 0 1 5.62 0c2.15-1.46 3.09-1.16 3.09-1.16.61 1.54.23 2.68.11 2.97.72.79 1.16 1.8 1.16 3.03 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.08v3.09c0 .3.21.65.78.54 4.48-1.49 7.7-5.71 7.7-10.7C23.25 5.48 18.27.5 12 .5z" />
+                    </svg>
+                  </a>
+                )}
+                {p.data.urlView && (
+                  <a
+                    href={p.data.urlView}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="v2-project-action"
+                    aria-label={t.projects.demoAria(name)}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+            <div class="v2-project-body">
+              <span class="v2-project-cat">{labelFor(cat)}</span>
+              <p class="v2-project-title">{name}</p>
+              <p class="v2-project-desc">
+                {field(p.data, "description", lang)}
+              </p>
+              <ul class="v2-project-tags">
+                {p.data.tags.map((t: string) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+</article>

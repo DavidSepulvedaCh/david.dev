@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import MainPanel from "@/components/MainPanel.astro";
+import { useTranslations, type Lang } from "@/i18n/ui";
+
+// `/` en español (lang sin valor) y `/en/` en inglés.
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { lang: "es" as Lang } },
+    { params: { lang: "en" }, props: { lang: "en" as Lang } },
+  ];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={lang}>
+  <div class="v2-shell">
+    <Sidebar lang={lang} />
+    <MainPanel lang={lang} />
+  </div>
+</Layout>
+
+<script>
+  import "@/scripts/portfolio";
+</script>

@@ -1,0 +1,120 @@
+---
+import { certifications, experiences, skills } from "@/cv.json";
+import { formatDuration } from "@/lib/dates";
+import { skillIcons } from "@/lib/skill-icons";
+import { field, useTranslations, type Lang } from "@/i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<article
+  class="v2-panel"
+  id="v2-panel-resume"
+  data-panel="resume"
+  role="tabpanel"
+  aria-labelledby="v2-tab-resume"
+>
+  <h2 class="v2-h1">{t.resume.title}</h2>
+  <p class="v2-prose">{t.resume.intro}</p>
+
+  <h3 class="v2-h2">{t.resume.experience}</h3>
+  <div class="v2-timeline">
+    {
+      experiences
+        .slice()
+        .reverse()
+        .map((exp) => (
+          <div class="v2-timeline-item">
+            <p class="v2-timeline-role">{field(exp, "title", lang)}</p>
+            <span class="v2-timeline-org">{exp.company}</span>
+            <p class="v2-timeline-date">
+              <span>{field(exp, "date", lang)}</span>
+              <span class="v2-dot">·</span>
+              <span
+                class="v2-duration"
+                data-start={exp.startDate}
+                data-end={exp.endDate ?? ""}
+              >
+                {formatDuration(exp.startDate, exp.endDate, lang)}
+              </span>
+            </p>
+            <p class="v2-timeline-desc">{field(exp, "description", lang)}</p>
+          </div>
+        ))
+    }
+  </div>
+
+  <h3 class="v2-h2">{t.resume.skills}</h3>
+  <ul class="v2-skills">
+    {
+      skills.map((s) => {
+        const Icon = skillIcons[s];
+        return (
+          <li class="v2-skill">
+            {Icon && (
+              <span class="v2-skill-icon" aria-hidden="true">
+                <Icon />
+              </span>
+            )}
+            <span class="v2-skill-name">{s}</span>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <h3 class="v2-h2">{t.resume.certifications}</h3>
+  <ul class="v2-certs">
+    {
+      certifications.map((cert) => {
+        const inner = (
+          <>
+            <span class="v2-cert-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6" />
+                <path d="M8.21 13.89 7 22l5-3 5 3-1.21-8.11" />
+              </svg>
+            </span>
+            <span class="v2-cert-name">{field(cert, "name", lang)}</span>
+            <span class="v2-cert-meta">
+              {[
+                cert.issuer,
+                cert.date,
+                cert.credentialId && `ID ${cert.credentialId}`,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </span>
+            {cert.url && (
+              <svg class="v2-cert-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            )}
+          </>
+        );
+
+        return cert.url ? (
+          <li>
+            <a
+              class="v2-cert is-link"
+              href={cert.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {inner}
+            </a>
+          </li>
+        ) : (
+          <li class="v2-cert">{inner}</li>
+        );
+      })
+    }
+  </ul>
+
+</article>

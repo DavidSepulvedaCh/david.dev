@@ -2,22 +2,49 @@
     "experiences": [
         {
             "title": "Pasante, Área de Tecnología",
-            "company": "Direccion de Impuestos y Aduanas Nacionales",
+            "title_en": "Intern, Technology Department",
+            "company": "Dirección de Impuestos y Aduanas Nacionales",
             "date": "Febrero 2024 - Julio 2024",
+            "date_en": "February 2024 - July 2024",
             "startDate": "2024-02-01",
             "endDate": "2024-07-31",
-            "description": "Miembro de La Mesa Soporte TIC, DIAN Seccional Bucaramanga.",
+            "description": "Miembro de la Mesa de Soporte TIC, DIAN Seccional Bucaramanga.",
+            "description_en": "Member of the ICT support desk at the DIAN Bucaramanga branch.",
             "url": "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
         },
         {
             "title": "Desarrollador Web",
+            "title_en": "Web Developer",
             "company": "Industrias Bicicletas Milán S.A.",
             "date": "Febrero 2025 - Actualidad",
+            "date_en": "February 2025 - Present",
             "startDate": "2025-02-01",
             "endDate": null,
             "description": "Desarrollador web, encargado de la creación de aplicaciones web, con el fin de automatizar procesos y mejorar la eficiencia de la empresa.",
+            "description_en": "Web developer in charge of building web applications to automate processes and improve the company's efficiency.",
             "url": "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
         }
     ],
-    "skills": ["Angular", "Astro", "CSS", "HTML", "JavaScript", "MongoDB", "MySQL", "NodeJs", "Sass", "Typescript"]
+    "skills": [
+        "Astro",
+        "JavaScript",
+        "MongoDB",
+        "MySQL",
+        "Next.js",
+        "NodeJs",
+        "Odoo",
+        "PostgreSQL",
+        "Sass",
+        "Typescript"
+    ],
+    "certifications": [
+        {
+            "name": "Certificación Funcional de Odoo 18",
+            "name_en": "Odoo 18 Functional Certification",
+            "issuer": "Odoo S.A.",
+            "date": "Jul 2025",
+            "credentialId": "0000690163",
+            "url": ""
+        }
+    ]
 }
