@@ -812,7 +812,7 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
 }
 
 /* ===== Chips (certificaciones, datos de contacto y 404) ===== */
-.v2-cert,
+.v2-chip,
 .v2-contact-tag {
   display: inline-flex;
   align-items: center;
@@ -829,15 +829,32 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
 }
 
 .v2-certs {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 10px;
   margin-top: 16px;
   padding: 0;
   list-style: none;
 }
 
+/* El <li> es la celda de la rejilla; si la certificación es enlace, el <a>
+   interior debe llenarla por completo. */
+.v2-certs > li {
+  display: flex;
+}
+
 .v2-cert {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 12px 15px;
+  background: var(--v2-accent-soft);
+  border: 1px solid var(--v2-accent-medium);
+  border-radius: 14px;
+  font-size: 13.5px;
+  color: var(--v2-text);
+  text-decoration: none;
   transition:
     border-color 0.2s ease,
     transform 0.2s ease;
@@ -854,19 +871,29 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
   color: var(--v2-accent);
 }
 
+.v2-cert-body {
+  min-width: 0;
+  flex: 1;
+}
+
 .v2-cert-icon svg {
   width: 16px;
   height: 16px;
 }
 
 .v2-cert-name {
+  display: block;
   font-weight: 600;
   letter-spacing: 0.01em;
+  line-height: 1.35;
 }
 
 .v2-cert-meta {
+  display: block;
+  margin-top: 3px;
   color: var(--v2-text-faint);
   font-size: 12.5px;
+  line-height: 1.4;
 }
 
 .v2-cert-arrow {
@@ -1596,11 +1623,16 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
     font-size: 13.5px;
   }
 
-  /* Certificaciones: chips más compactos */
-  .v2-cert {
-    padding: 8px 13px;
-    font-size: 13px;
+  /* Certificaciones: tarjetas más compactas */
+  .v2-certs {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 8px;
+  }
+
+  .v2-cert {
+    padding: 10px 13px;
+    font-size: 13px;
+    gap: 9px;
   }
 
   .v2-cert-meta {
@@ -1891,13 +1923,13 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
   list-style: none;
 }
 
-.v2-404-links .v2-cert {
+.v2-404-links .v2-chip {
   transition:
     border-color 0.2s ease,
     transform 0.2s ease;
 }
 
-.v2-404-links .v2-cert:hover {
+.v2-404-links .v2-chip:hover {
   border-color: var(--v2-accent);
   transform: translateY(-2px);
 }

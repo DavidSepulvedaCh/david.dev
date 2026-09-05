@@ -39,6 +39,34 @@
     ],
     "certifications": [
         {
+            "name": "Introduction to Model Context Protocol",
+            "issuer": "Anthropic",
+            "date": "May 2026",
+            "credentialId": "gz8yn93n49cf",
+            "url": ""
+        },
+        {
+            "name": "Introduction to agent skills",
+            "issuer": "Anthropic",
+            "date": "May 2026",
+            "credentialId": "tmhq62oc5xbv",
+            "url": ""
+        },
+        {
+            "name": "Claude Code in Action",
+            "issuer": "Anthropic",
+            "date": "May 2026",
+            "credentialId": "x4nhvytrzbfn",
+            "url": ""
+        },
+        {
+            "name": "Building with the Claude API",
+            "issuer": "Anthropic",
+            "date": "May 2026",
+            "credentialId": "nfc5274if4cx",
+            "url": ""
+        },
+        {
             "name": "Certificación Funcional de Odoo 18",
             "name_en": "Odoo 18 Functional Certification",
             "issuer": "Odoo S.A.",
