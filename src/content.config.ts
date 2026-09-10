@@ -1,7 +1,10 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+// `z` reexportado desde astro:content quedó deprecado en Astro 7.
+import { z } from "astro/zod";
 
 const project = defineCollection({
-    type: "content",
+    loader: glob({ pattern: "**/*.md", base: "./src/content/project" }),
     // `image()` valida la ruta y deja que astro:assets optimice el archivo.
     schema: ({ image }) => z.object({
         title: z.string(),
