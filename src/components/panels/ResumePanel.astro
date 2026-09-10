@@ -9,6 +9,25 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+// Los cargos consecutivos en la misma empresa se agrupan bajo una sola
+// entrada, para que se lea como una promoción interna y no como dos empleos.
+type Experience = (typeof experiences)[number];
+const timeline: { company: string; roles: Experience[] }[] = [];
+for (const exp of experiences.slice().reverse()) {
+  const current = timeline.at(-1);
+  if (current && current.company === exp.company) current.roles.push(exp);
+  else timeline.push({ company: exp.company, roles: [exp] });
+}
+
+// Rango total en la empresa: del primer ingreso a la última salida
+// (abierto si alguno de los cargos sigue vigente).
+const span = (roles: Experience[]) => ({
+  start: roles.map((r) => r.startDate).sort()[0],
+  end: roles.some((r) => !r.endDate)
+    ? null
+    : roles.map((r) => r.endDate!).sort().at(-1)!,
+});
 ---
 
 <article
@@ -24,27 +43,52 @@ const t = useTranslations(lang);
   <h3 class="v2-h2">{t.resume.experience}</h3>
   <div class="v2-timeline">
     {
-      experiences
-        .slice()
-        .reverse()
-        .map((exp) => (
+      timeline.map((group) => {
+        const total = span(group.roles);
+        return (
           <div class="v2-timeline-item">
-            <p class="v2-timeline-role">{field(exp, "title", lang)}</p>
-            <span class="v2-timeline-org">{exp.company}</span>
-            <p class="v2-timeline-date">
-              <span>{field(exp, "date", lang)}</span>
-              <span class="v2-dot">·</span>
-              <span
-                class="v2-duration"
-                data-start={exp.startDate}
-                data-end={exp.endDate ?? ""}
-              >
-                {formatDuration(exp.startDate, exp.endDate, lang)}
-              </span>
-            </p>
-            <p class="v2-timeline-desc">{field(exp, "description", lang)}</p>
+            <p class="v2-timeline-org">{group.company}</p>
+            {group.roles.length > 1 && (
+              <p class="v2-timeline-total">
+                <span
+                  class="v2-duration"
+                  data-start={total.start}
+                  data-end={total.end ?? ""}
+                >
+                  {formatDuration(total.start, total.end, lang)}
+                </span>
+              </p>
+            )}
+
+            <div
+              class:list={[
+                "v2-timeline-roles",
+                group.roles.length > 1 && "is-multi",
+              ]}
+            >
+              {group.roles.map((exp) => (
+                <div class="v2-timeline-role-item">
+                  <p class="v2-timeline-role">{field(exp, "title", lang)}</p>
+                  <p class="v2-timeline-date">
+                    <span>{field(exp, "date", lang)}</span>
+                    <span class="v2-dot">·</span>
+                    <span
+                      class="v2-duration"
+                      data-start={exp.startDate}
+                      data-end={exp.endDate ?? ""}
+                    >
+                      {formatDuration(exp.startDate, exp.endDate, lang)}
+                    </span>
+                  </p>
+                  <p class="v2-timeline-desc">
+                    {field(exp, "description", lang)}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        ))
+        );
+      })
     }
   </div>
 

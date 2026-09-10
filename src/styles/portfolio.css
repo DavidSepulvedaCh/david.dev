@@ -763,7 +763,8 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
   box-shadow: 0 0 0 4px var(--v2-accent-soft);
 }
 
-.v2-timeline-role {
+/* La empresa encabeza el grupo; los cargos van anidados debajo. */
+.v2-timeline-org {
   grid-column: 2;
   grid-row: 1;
   font-size: 16px;
@@ -772,23 +773,73 @@ html[data-v2-theme-pref="system"] .v2-theme-toggle .v2-theme-icon[data-icon="sys
   margin: 0;
 }
 
-.v2-timeline-org,
-.v2-timeline-date,
-.v2-timeline-desc {
+.v2-timeline-total,
+.v2-timeline-roles {
   grid-column: 2;
 }
 
-.v2-timeline-org {
-  display: block;
-  color: var(--v2-accent);
-  font-size: 14px;
-  margin: 2px 0 4px;
+.v2-timeline-total {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--v2-text-faint);
+}
+
+.v2-timeline-roles {
+  margin-top: 10px;
+}
+
+/* Con varios cargos se dibuja una guía interna que los une bajo la empresa. */
+.v2-timeline-roles.is-multi {
+  position: relative;
+  padding-left: 18px;
+}
+
+.v2-timeline-roles.is-multi::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 7px;
+  bottom: 7px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--v2-border);
+}
+
+.v2-timeline-role-item + .v2-timeline-role-item {
+  margin-top: 16px;
+}
+
+.v2-timeline-roles.is-multi .v2-timeline-role-item {
+  position: relative;
+}
+
+.v2-timeline-roles.is-multi .v2-timeline-role-item::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v2-accent);
+  box-shadow: 0 0 0 3px var(--v2-card);
+}
+
+.v2-timeline-role {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--v2-text);
+  margin: 0;
+}
+
+.v2-timeline-roles.is-multi .v2-timeline-role {
+  font-size: 14.5px;
 }
 
 .v2-timeline-date {
   color: var(--v2-text-faint);
   font-size: 12px;
-  margin: 0 0 8px;
+  margin: 3px 0 8px;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;

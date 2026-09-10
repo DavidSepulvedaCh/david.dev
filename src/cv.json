@@ -13,15 +13,27 @@
             "url": "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
         },
         {
-            "title": "Desarrollador Web",
-            "title_en": "Web Developer",
+            "title": "Desarrollador Web Full-stack",
+            "title_en": "Full-stack Web Developer",
             "company": "Industrias Bicicletas Milán S.A.",
-            "date": "Febrero 2025 - Actualidad",
-            "date_en": "February 2025 - Present",
+            "date": "Febrero 2025 - Julio 2026",
+            "date_en": "February 2025 - July 2026",
             "startDate": "2025-02-01",
+            "endDate": "2026-07-31",
+            "description": "Desarrollo de módulos y personalización de flujos en Odoo v18 y v19, adaptando la plataforma a las necesidades del negocio.",
+            "description_en": "Development of modules and customization of workflows in Odoo v18 and v19, adapting the platform to the needs of the business.",
+            "url": "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
+        },
+        {
+            "title": "Líder del Equipo de Operaciones",
+            "title_en": "Operations Team Lead",
+            "company": "Industrias Bicicletas Milán S.A.",
+            "date": "Julio 2026 - Actualidad",
+            "date_en": "July 2026 - Present",
+            "startDate": "2026-07-01",
             "endDate": null,
-            "description": "Líder del equipo de desarrollo, responsable de soluciones tecnológicas para procesos de Inventario, Puntos de Venta (POS), Garantías Postventa y Talento Humano.\n\nDesarrollo y personalización de módulos en Odoo v18 y v19, adaptando la plataforma a las necesidades del negocio.",
-            "description_en": "Leader of the development team, responsible for technological solutions for inventory processes, point-of-sale (POS), post-sales warranties and human resources.\n\nDevelopment and customization of modules in Odoo v18 and v19, adapting the platform to the business needs.",
+            "description": "Lidero y desarrollo los módulos de las áreas de Inventario, Puntos de Venta (POS), Garantías Postventa y Talento Humano.",
+            "description_en": "I lead and develop the modules for the inventory, point-of-sale (POS), post-sales warranty and human resources areas.",
             "url": "https://www.linkedin.com/in/david-leonardo-sep%C3%BAlveda-21303a255/"
         }
     ],
